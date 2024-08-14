@@ -4,18 +4,6 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
-const alreadyExist = (username) =>{
-    let foundUser = users.filter((user)=>user.username==username);
-    if(foundUser.length > 0)
-    {
-        // username exist
-        return true;
-    }
-
-    return false;
-}
-
-
 public_users.post("/register", (req,res) => {
  
     let username = req.body.username;
@@ -23,7 +11,7 @@ public_users.post("/register", (req,res) => {
 
     try {
 
-        if(alreadyExist(username))
+        if(isValid(username))
         {
            throw new Error(`${username} already exist`);
         }
